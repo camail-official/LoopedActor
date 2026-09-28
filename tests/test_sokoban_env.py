@@ -46,9 +46,9 @@ def test_dynamics_and_reward():
     walls = np.ones((10, 10), bool); walls[1:9, 1:9] = False
     boxes = np.zeros((10, 10), bool); boxes[4, 4] = True
     targets = np.zeros((10, 10), bool); targets[4, 6] = True
-    cfg = default_config(); cfg.train_split = cfg.eval_split = 'hard'
-    if not os.path.exists(os.path.join(DATA_DIR, 'hard.npz')):
-        pytest.skip('data/boxoban/hard.npz missing (python data_scripts/build_boxoban_banks.py)')
+    cfg = default_config(); cfg.train_split = cfg.eval_split = 'unfiltered_test'
+    if not os.path.exists(os.path.join(DATA_DIR, 'unfiltered_test.npz')):
+        pytest.skip('data/boxoban/unfiltered_test.npz missing (python data_scripts/build_boxoban_banks.py)')
     env = SokobanEnv(cfg); step = jax.jit(env.step)
     s = _state(env, walls, boxes, targets, (4, 3))
     assert s.obs.shape == (400,) and env.observation_size == 400 and env.action_size == 4
@@ -68,10 +68,10 @@ def test_dynamics_and_reward():
 
 
 def test_bank_reset_shapes():
-    if not os.path.exists(os.path.join(DATA_DIR, 'hard.npz')):
-        pytest.skip('data/boxoban/hard.npz missing (python data_scripts/build_boxoban_banks.py)')
-    cfg = default_config(); cfg.train_split = cfg.eval_split = 'hard'
+    if not os.path.exists(os.path.join(DATA_DIR, 'unfiltered_test.npz')):
+        pytest.skip('data/boxoban/unfiltered_test.npz missing (python data_scripts/build_boxoban_banks.py)')
+    cfg = default_config(); cfg.train_split = cfg.eval_split = 'unfiltered_test'
     env = SokobanEnv(cfg)
-    assert env.num_eval_levels == 3332
+    assert env.num_eval_levels == 1000
     s = jax.jit(env.eval_reset)(jax.random.PRNGKey(1))
     assert s.obs.shape == (400,) and int(jnp.sum(s.data.boxes)) == 4 and int(jnp.sum(s.data.targets)) == 4
