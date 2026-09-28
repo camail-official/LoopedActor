@@ -1,0 +1,14 @@
+# Versions used for all reported runs (Python 3.11). Install the CUDA build of JAX for GPU training:
+#   pip install -U "jax[cuda12]==0.10.2"
+jax==0.10.2
+jaxlib==0.10.2
+flax==0.12.8
+optax==0.2.8
+distrax==0.1.9
+chex==0.1.92
+numpy==2.4.6
+scipy==1.17.1
+tyro==1.0.15
+ml-collections==1.1.0
+absl-py==2.5.0
+pytest==9.1.1

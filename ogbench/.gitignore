@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+exp/
+checkpoints/
+wandb/
+*.pkl
+*.tar.gz
